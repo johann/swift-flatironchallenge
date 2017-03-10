@@ -15,7 +15,6 @@ final class Book : Model {
     var exists: Bool = false
     
     var author: String
-    var categories: String
     var lastCheckedOut: Bool?
     var lastCheckedOutBy: String?
     var publisher: String
@@ -23,10 +22,17 @@ final class Book : Model {
     var url: String
     
     
+    init(author: String, publisher: String, title: String, url: String) {
+        self.author = author
+        self.publisher = publisher
+        self.title = title
+        self.url = url
+        
+    }
+    
     init(node: Node, in context: Context) throws {
         id = try node.extract("id")
         author = try node.extract("author")
-        categories = try node.extract("categories")
         lastCheckedOut = try node.extract("lastCheckedOut")
         lastCheckedOutBy = try node.extract("lastCheckedOutBy")
         publisher = try node.extract("publisher")
@@ -39,7 +45,6 @@ final class Book : Model {
         return try Node(node: [
             "id": id,
             "author":author,
-            "categories":categories,
             "lastCheckedOut":lastCheckedOut,
             "lastCheckedOutBy":lastCheckedOutBy,
             "publisher":publisher,
@@ -52,7 +57,6 @@ final class Book : Model {
         try database.create("books") { books in
             books.id()
             books.string("author")
-            books.string("categories")
             books.string("lastCheckedOutBy", length: 255, optional: true, unique: false, default: nil)
             books.bool("lastCheckedOut", optional: true, unique: false, default: nil)
             books.string("publisher")

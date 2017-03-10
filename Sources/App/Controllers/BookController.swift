@@ -39,7 +39,6 @@ final class BookController: ResourceRepresentable {
         var book = book
         book.author = new.author
         book.title = new.title
-        book.categories = new.categories
         book.publisher = new.publisher
         book.url = new.url
         book.lastCheckedOutBy = new.lastCheckedOutBy
