@@ -33,8 +33,8 @@ final class Book : Model {
     init(node: Node, in context: Context) throws {
         id = try node.extract("id")
         author = try node.extract("author") 
-        lastCheckedOut = try node.extract("lastCheckedOut")
-        lastCheckedOutBy = try node.extract("lastCheckedOutBy")
+        lastCheckedOut = try node.extract("lastcheckedout")
+        lastCheckedOutBy = try node.extract("lastcheckedoutby")
         publisher = try node.extract("publisher")
         title = try node.extract("title")
         url = try node.extract("url")
@@ -45,8 +45,8 @@ final class Book : Model {
         return try Node(node: [
             "id": id,
             "author":author,
-            "lastCheckedOut":lastCheckedOut,
-            "lastCheckedOutBy":lastCheckedOutBy,
+            "lastcheckedout":lastCheckedOut,
+            "lastcheckedoutby":lastCheckedOutBy,
             "publisher":publisher,
             "title": title,
             "url":url
