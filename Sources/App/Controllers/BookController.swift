@@ -16,6 +16,7 @@ final class BookController: ResourceRepresentable {
     
     func create(request: Request) throws -> ResponseRepresentable {
         var book = try request.book()
+        print(book)
         try book.save()
         return book
     }
@@ -36,20 +37,40 @@ final class BookController: ResourceRepresentable {
     
     func update(request: Request, book: Book) throws -> ResponseRepresentable {
         let new = try request.book()
+        dump(new)
+        dump(book)
         var book = book
-        book.author = new.author
-        book.title = new.title
-        book.publisher = new.publisher
-        book.url = new.url
-        book.lastCheckedOutBy = new.lastCheckedOutBy
-        book.lastCheckedOut = new.lastCheckedOut
+        if let author = new.author {
+            book.author = author
+        }
+        if let title = new.title {
+            book.title = title
+        }
+        if let publisher = new.publisher {
+            book.publisher = publisher
+        }
+        
+        if let lastCheckedOut = new.lastCheckedOut {
+            book.lastCheckedOut = lastCheckedOut
+            
+        }
+        if let lastCheckoutOutBy = new.lastCheckedOutBy {
+            book.lastCheckedOutBy = lastCheckoutOutBy
+            
+        }
+        if let url = new.url {
+            book.url = url
+        }
+        
         try book.save()
         return book
     }
     
     func replace(request: Request, book: Book) throws -> ResponseRepresentable {
-        try book.delete()
-        return try create(request: request)
+        print("replacing")
+        //try book.delete()
+        return try update(request: request, book: book)
+       // return try create(request: request)
     }
     
     func makeResource() -> Resource<Book> {

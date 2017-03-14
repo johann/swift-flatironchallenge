@@ -14,12 +14,12 @@ final class Book : Model {
     var id: Node?
     var exists: Bool = false
     
-    var author: String
+    var author: String?
     var lastCheckedOut: Bool?
     var lastCheckedOutBy: String?
-    var publisher: String
-    var title: String
-    var url: String
+    var publisher: String?
+    var title: String?
+    var url: String?
     
     
     init(author: String, publisher: String, title: String, url: String) {
@@ -32,7 +32,7 @@ final class Book : Model {
     
     init(node: Node, in context: Context) throws {
         id = try node.extract("id")
-        author = try node.extract("author")
+        author = try node.extract("author") 
         lastCheckedOut = try node.extract("lastCheckedOut")
         lastCheckedOutBy = try node.extract("lastCheckedOutBy")
         publisher = try node.extract("publisher")
