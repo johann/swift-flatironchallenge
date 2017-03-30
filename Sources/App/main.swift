@@ -7,9 +7,6 @@ let drop = Droplet()
 try drop.addProvider(VaporPostgreSQL.Provider.self)
 
 drop.preparations += Book.self
-drop.preparations += MainUser.self
-drop.middleware += AuthMiddleware<MainUser>()
-drop.middleware += TrustProxyMiddleware()
 
 
 drop.get { req in
@@ -18,7 +15,9 @@ drop.get { req in
         ])
 }
 
-drop.get("seedBooks",String.self) { request, topic in
+
+/// Seeding database to give it some default books.
+drop.get("seedbooks",String.self) { request, topic in
     let url = "https://www.googleapis.com/books/v1/volumes?q=subject:\(topic)&maxResults=40"
     let response = try drop.client.get(url)
     var petArray = [Book]()
@@ -47,8 +46,7 @@ drop.get("seedBooks",String.self) { request, topic in
     return try JSON(node:["success":books.makeNode()])
     
 }
-
-drop.get("seedBooks") { request in
+drop.get("seedbooks") { request in
     
     
     let url = "https://www.googleapis.com/books/v1/volumes?q=subject:suspense&maxResults=40"
